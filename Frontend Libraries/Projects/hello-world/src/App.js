@@ -11,7 +11,8 @@ const styleblockQuote = {
   borderStyle: "solid",
   padding: "20px 10px 15px 20px",
   fontSize: "25px",
-  fontFamily: "Roboto"
+  fontFamily: "Roboto",
+  color:"white"
 
 }
 const styleChangeQuote = {
@@ -24,7 +25,8 @@ const styleAuthor = {
   // borderStyle: "solid",
   // padding: "20px 10px 15px 20px",
   fontSize: "20px",
-  fontFamily: "Courier"
+  fontFamily: "Courier",
+  color:"white"
 
 }
 const authorWithQuote = {
@@ -74,7 +76,7 @@ class App extends Component {
           <div className="col-2">
           </div>
           <div className="col-8 text-center mt-5 rounded border">
-            <strong><h2 style={styles}>Quote Machine V</h2></strong>
+            <strong><h2 style={styles}>Quote Machine</h2></strong>
             <blockquote id="text" style={styleblockQuote}>
               <b> <i>{this.state.quote}</i></b>
               <div className="row">
@@ -91,7 +93,7 @@ class App extends Component {
   href={"https://twitter.com/intent/tweet?text="+this.state.quote}>Tweet</a>
               </div>
               <div className="col-8">
-                <button className="btn btn-primary btn-sm" onClick={this.buttonEvent} style={styleChangeQuote}>Change Quote</button>
+                <button className="btn btn-primary btn-sm" id="new-quote" onClick={this.buttonEvent} style={styleChangeQuote}>Change Quote</button>
               </div>
               <div className="col-2">
               </div>
