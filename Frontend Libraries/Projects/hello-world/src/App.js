@@ -74,7 +74,7 @@ class App extends Component {
           <div className="col-2">
           </div>
           <div className="col-8 text-center mt-5 rounded border">
-            <strong><h2 style={styles}>Quote Machine</h2></strong>
+            <strong><h2 style={styles}>Quote Machine V</h2></strong>
             <blockquote id="text" style={styleblockQuote}>
               <b> <i>{this.state.quote}</i></b>
               <div className="row">
