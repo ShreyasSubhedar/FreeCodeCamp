@@ -20,9 +20,6 @@ const styleChangeQuote = {
 }
 
 const styleAuthor = {
-  // borderColor: "#000000",
-  // borderStyle: "solid",
-  // padding: "20px 10px 15px 20px",
   fontSize: "20px",
   fontFamily: "Courier",
 
