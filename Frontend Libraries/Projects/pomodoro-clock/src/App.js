@@ -1,45 +1,107 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import './App.css';
 import Break from './break';
 import Session from './session';
 import TimeLeft from './TimeLeft';
 
 function App() {
-  const [breakLength, setBreakLength]=useState(300);
-    const decrementBreakLengthByOneUnit=()=>{
-        const newBreakLength = breakLength-60;
-        if(newBreakLength<0)
-        setBreakLength(0);
-        else{
-            setBreakLength(newBreakLength);
-        }
-    }
-    const incrementBreakLengthByOneUnit=()=>{
-        const newBreakLength = breakLength+60;
-        if(newBreakLength>3600)
-        setBreakLength(3600);
-        else{
-            setBreakLength(newBreakLength);
-        }
-    }
-    const breakLengthInMinutes = parseInt(breakLength/60,10);
-   const [SessionLength, setSessionLength] = useState(25*60);
-  const decrementSessionLengthByOneUnit=()=>{
-      const newSessionLength = SessionLength-60;
-      if(newSessionLength<0)
-      setSessionLength(0);
-      else{
-          setSessionLength(newSessionLength);
+  const audioElement = useRef(null);
+  const [currentSessionType, setCurrentSessionType] = useState('Session'); // 'Session' or 'Break'
+  const [intervalId, setIntervalId] = useState(null);
+  const [SessionLength, setSessionLength] = useState(60 * 25);
+  const [breakLength, setBreakLength] = useState(300);
+  const [timeLeft, setTimeLeft] = useState(SessionLength);
+
+  // change timeLeft whenever SessionLength4 changes
+  useEffect(() => {
+    setTimeLeft(SessionLength);
+  }, [SessionLength]);
+
+  // listen to timeLeft changes
+  useEffect(() => {
+    // if timeLeft is zero
+    if (timeLeft === 0) {
+      // play the audio
+      audioElement.current.play();
+      // change session to break or break to session
+      if (currentSessionType === 'Session') {
+        setCurrentSessionType('Break');
+        setTimeLeft(breakLength);
+      } else if (currentSessionType === 'Break') {
+        setCurrentSessionType('Session');
+        setTimeLeft(SessionLength);
       }
-  }
-  const incrementSessionLengthByOneUnit=()=>{
-      const newSessionLength = SessionLength+60;
-      if(newSessionLength>3600)
-      setSessionLength(3600);
-      else{
-          setSessionLength(newSessionLength);
+    }
+  }, [breakLength, currentSessionType, SessionLength, timeLeft]);
+
+  const decrementBreakLengthByOneUnit = () => {
+    const newBreakLength = breakLength - 60;
+    if (newBreakLength > 0) {
+      setBreakLength(newBreakLength);
+    }
+  };
+
+  const incrementBreakLengthByOneUnit = () => {
+    const newBreakLength = breakLength + 60;
+    if (newBreakLength <= 60 * 60) {
+      setBreakLength(newBreakLength);
+    }
+  };
+
+  const decrementSessionLengthByOneUnit = () => {
+    const newSessionLength = SessionLength - 60;
+    if (newSessionLength > 0) {
+      setSessionLength(newSessionLength);
+    }
+  };
+
+  const incrementSessionLengthByOneUnit = () => {
+    const newSessionLength = SessionLength + 60;
+    if (newSessionLength <= 60 * 60) {
+      setSessionLength(SessionLength + 60);
+    }
+  };
+
+  const isStarted = intervalId !== null;
+  const handleStartStopClick = () => {
+    if (isStarted) {
+      // if we are in started mode:
+      // we want to stop the timer
+      // clearInterval
+      if (intervalId) {
+        clearInterval(intervalId);
       }
-  }
+      setIntervalId(null);
+    } else {
+      // if we are in stopped mode:
+      // decrement timeLeft by one every second (1000 ms)
+      // to do this we'll use setInterval
+      const newIntervalId = setInterval(() => {
+        setTimeLeft(prevTimeLeft => prevTimeLeft - 1);
+      }, 1000); // TODO: turn back into 1000
+      setIntervalId(newIntervalId);
+    }
+  };
+
+  const handleResetButtonClick = () => {
+    // reset audio
+    audioElement.current.load();
+    // clear the timeout interval
+    if (intervalId) {
+      clearInterval(intervalId);
+    }
+    // set the intervalId null
+    setIntervalId(null);
+    // set the sessiontype to 'Session'
+    setCurrentSessionType('Session');
+    // reset the session length to 25 minutes
+    setSessionLength(60 * 25);
+    // reset the break length to 5 minutes
+    setBreakLength(60 * 5);
+    // reset the timer to 25 minutes (initial session length)
+    setTimeLeft(60 * 25);
+  };
+  const breakLengthInMinutes = parseInt(breakLength/60,10);
   const SessionLengthInMinutes = parseInt(SessionLength/60,10);
     return (
       <div className="container">
@@ -61,10 +123,16 @@ function App() {
                 />
             </div>
             <div className="row">
-          <TimeLeft
-                SessionLength={SessionLength}
-                breakLength={breakLength}
-                />
+            <TimeLeft
+        handleStartStopClick={handleStartStopClick}
+        timerLabel={currentSessionType}
+        startStopButtonLabel={isStarted ? 'Stop' : 'Start'}
+        timeLeft={timeLeft}
+        handleResetButtonClick={handleResetButtonClick}
+      />
+      <audio id="beep" ref={audioElement}>
+        <source src="https://onlineclock.net/audio/options/default.mp3" type="audio/mpeg" />
+      </audio>
             </div>
             <br />
             
