@@ -18,6 +18,7 @@ class App extends Component {
         <div className="col-sm">
         </div>
       </div>
+      <footer style={{textAlign:"center", paddingTop:"50px"}}>Designed and Developed by<br/> Shreyas Subhedar</footer>
     </div>
     );
   }
