@@ -101,47 +101,47 @@ function App() {
     // reset the timer to 25 minutes (initial session length)
     setTimeLeft(60 * 25);
   };
-  const breakLengthInMinutes = parseInt(breakLength/60,10);
-  const SessionLengthInMinutes = parseInt(SessionLength/60,10);
-    return (
-      <div className="container">
-        <strong><h2 style={{ fontFamily: "ubuntu", textAlign: "center" }}>Pomodoro Clock</h2></strong>
-        <div className="row">
-          <div className="col-sm">
+  const breakLengthInMinutes = parseInt(breakLength / 60, 10);
+  const SessionLengthInMinutes = parseInt(SessionLength / 60, 10);
+  return (
+    <div className="container">
+      <strong><h2 style={{ fontFamily: "ubuntu", textAlign: "center" }}>Pomodoro Clock</h2></strong>
+      <div className="row">
+        <div className="col-sm">
+        </div>
+        <div className="col-sm-6 mt-5 border rounded">
+          <div className="row">
+            <Break
+              breakLengthInMinutes={breakLengthInMinutes}
+              decrementBreakLengthByOneUnit={decrementBreakLengthByOneUnit}
+              incrementBreakLengthByOneUnit={incrementBreakLengthByOneUnit}
+            />
+            <Session
+              SessionLengthInMinutes={SessionLengthInMinutes}
+              decrementSessionLengthByOneUnit={decrementSessionLengthByOneUnit}
+              incrementSessionLengthByOneUnit={incrementSessionLengthByOneUnit}
+            />
           </div>
-          <div className="col-sm-6 mt-5 border rounded">
-            <div className="row">
-                  <Break 
-                  breakLengthInMinutes={breakLengthInMinutes}
-                  decrementBreakLengthByOneUnit={decrementBreakLengthByOneUnit}
-                  incrementBreakLengthByOneUnit={incrementBreakLengthByOneUnit}
-                  />
-                <Session 
-                SessionLengthInMinutes={SessionLengthInMinutes}
-                decrementSessionLengthByOneUnit={decrementSessionLengthByOneUnit}
-                incrementSessionLengthByOneUnit={incrementSessionLengthByOneUnit}
-                />
-            </div>
-            <div className="row">
+          <div className="row">
             <TimeLeft
-        handleStartStopClick={handleStartStopClick}
-        timerLabel={currentSessionType}
-        startStopButtonLabel={isStarted ? 'Stop' : 'Start'}
-        timeLeft={timeLeft}
-        handleResetButtonClick={handleResetButtonClick}
-      />
-      <audio id="beep" ref={audioElement}>
-        <source src="https://onlineclock.net/audio/options/default.mp3" type="audio/mpeg" />
-      </audio>
-            </div>
-            <br />
-            
+              handleStartStopClick={handleStartStopClick}
+              timerLabel={currentSessionType}
+              startStopButtonLabel={isStarted ? 'Stop' : 'Start'}
+              timeLeft={timeLeft}
+              handleResetButtonClick={handleResetButtonClick}
+            />
+            <audio id="beep" ref={audioElement}>
+              <source src="https://onlineclock.net/audio/options/default.mp3" type="audio/mpeg" />
+            </audio>
           </div>
-          <div className="col-sm">
-          </div>
+          <br />
+
+        </div>
+        <div className="col-sm">
         </div>
       </div>
-    );
+    </div>
+  );
 }
 
 export default App;
