@@ -1,0 +1,62 @@
+    <script src="http://d3js.org/d3.v3.min.js" charset="utf-8"></script>
+
+<style>
+  .bar {
+    width: 3px;
+    height: 100px;
+    /* Only change code below this line */
+
+    
+    /* Only change code above this line */
+    display: inline-block;
+    background-color: blue;
+  }
+</style>
+<body>
+<svg width="500" height="500">
+
+</svg>
+
+  <script>
+   var d =[]
+
+const req= new XMLHttpRequest();
+req.open("GET",'https://raw.githubusercontent.com/freeCodeCamp/ProjectReferenceData/master/GDP-data.json',true);
+req.send();
+req.onload=function(){
+ if (req.readyState === 4) {
+    if (req.status === 200) {
+  const json = JSON.parse(req.responseText);
+for(var i in json.data){
+d.push(json.data[i][1]);
+console.log(json.data[i][1]);
+}
+    } else {
+      console.error(req.statusText);
+    }
+  }
+
+
+};
+setTimeout(()=>{
+var v = Object.values(d);
+console.log('this is : v',v);
+const d1= d.values();
+        d3.select("body").selectAll("div")
+.selectAll('rect');        
+.data(v)
+        .enter()
+        .append("div")
+        .attr("class", "bar")
+        .style("margin","1px")
+        .style("height", (d) => (d/50 + "px"))
+	.append("title")
+      	.text((d)=>d)
+
+}, 300)
+
+
+  </script>
+
+
+</body>
