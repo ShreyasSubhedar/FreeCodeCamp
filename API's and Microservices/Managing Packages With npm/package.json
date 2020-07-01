@@ -10,6 +10,6 @@
       "react-bootstrap": "^0.32.4",
       "react-dom": "^16.13.1",
       "react-scripts": "0.9.5",
-      "moment":"2.14.0"
+      "moment":"2.10.2"
     }
 }
