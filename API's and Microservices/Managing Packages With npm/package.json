@@ -1,5 +1,6 @@
 {
    "author":"Jack",
    "description": "FreeCodeCamp NPM Tutorials",
-   "keywords" : ["freecodecamp", "microservice", "guide" ]
+   "keywords" : ["freecodecamp", "microservice", "guide" ],
+   "license": "MIT"
 }
