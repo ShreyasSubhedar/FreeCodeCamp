@@ -1,7 +1,14 @@
 {
    "version": "1.0.1",
+   "license": "MIT",
    "author":"Jack",
    "description": "FreeCodeCamp NPM Tutorials",
    "keywords" : ["freecodecamp", "microservice", "guide" ],
-   "license": "MIT"
+   "dependencies": {
+      "bootstrap": "^4.5.0",
+      "react": "^16.13.1",
+      "react-bootstrap": "^0.32.4",
+      "react-dom": "^16.13.1",
+      "react-scripts": "0.9.5"
+    }
 }
