@@ -1,4 +1,5 @@
 {
+   "version": "1.0.1",
    "author":"Jack",
    "description": "FreeCodeCamp NPM Tutorials",
    "keywords" : ["freecodecamp", "microservice", "guide" ],
