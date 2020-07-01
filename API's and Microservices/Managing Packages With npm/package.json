@@ -1,3 +1,5 @@
 {
-   "author":"Jack"
+   "author":"Jack",
+   "description": "FreeCodeCamp NPM Tutorials"
+
 }
